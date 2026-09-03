@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#B25470">
+<title>Feruzbek &amp; Odinaxon — Taklifnoma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FFF8F3;
+    --blush:#F3D9DE;
+    --blush-soft:#FBEDEF;
+    --rose:#B25470;
+    --rose-deep:#8C3A54;
+    --gold:#C6963C;
+    --gold-soft:#E4C583;
+    --plum:#3A1F2B;
+    --sage:#7C8B5D;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ivory);
+    color:var(--plum);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  .serif{font-family:'Cormorant Garamond', serif;}
+
+  /* ---------- Floral line-art ornaments ---------- */
+  .ornament{display:block; margin:0 auto;}
+  .ornament path, .ornament ellipse, .ornament circle{
+    fill:none; stroke-linecap:round; stroke-linejoin:round;
+  }
+
+  /* ---------- Cover ---------- */
+  #cover{
+    position:fixed; inset:0; z-index:50;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:
+      radial-gradient(circle at 50% 18%, var(--blush-soft) 0%, var(--ivory) 55%);
+    text-align:center;
+    padding:8vh 6vw;
+    transition:opacity 1s ease, visibility 1s ease;
+  }
+  #cover.hidden{opacity:0; visibility:hidden; pointer-events:none;}
+
+  .cover-ring{
+    width:min(78vw, 340px); height:min(78vw, 340px);
+    border:1px solid var(--gold-soft);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    position:relative;
+  }
+  .cover-ring::before{
+    content:'';
+    position:absolute; inset:14px;
+    border:1px solid var(--gold-soft);
+    border-radius:50%;
+    opacity:.6;
+  }
+  .cover-lang{
+    position:absolute; top:6vh; display:flex; gap:14px;
+    font-family:'Jost'; font-size:12px; letter-spacing:.12em; color:var(--rose-deep);
+  }
+  .cover-lang span{opacity:.4; cursor:pointer;}
+  .cover-lang span.active{opacity:1; border-bottom:1px solid var(--rose-deep); padding-bottom:2px;}
+
+  .cover-monogram{
+    font-family:'Cormorant Garamond'; font-style:italic; font-weight:500;
+    font-size:clamp(40px, 12vw, 58px);
+    color:var(--rose-deep);
+    line-height:1;
+  }
+  .cover-amp{color:var(--gold); font-size:.65em; margin:0 6px; vertical-align:-2px;}
+
+  .cover-names{
+    margin-top:14px; font-family:'Jost'; font-weight:400; font-size:13px;
+    letter-spacing:.22em; color:var(--plum); opacity:.75;
+  }
+
+  .cover-date{
+    margin-top:26px; font-family:'Cormorant Garamond'; font-size:17px;
+    color:var(--rose); letter-spacing:.08em;
+  }
+
+  .cover-tap{
+    margin-top:5vh; font-size:11px; letter-spacing:.18em; color:var(--gold);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    cursor:pointer; background:none; border:none; font-family:'Jost';
+  }
+  .cover-tap-circle{
+    width:46px; height:46px; border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    animation:pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{transform:scale(1); opacity:.75;}
+    50%{transform:scale(1.08); opacity:1;}
+  }
+
+  /* ---------- Main content ---------- */
+  #book{
+    opacity:0; transition:opacity 1.1s ease;
+  }
+  #book.visible{opacity:1;}
+
+  .section{
+    position:relative;
+    padding:15vh 8vw;
+    text-align:center;
+    max-width:640px;
+    margin:0 auto;
+  }
+
+  .eyebrow{
+    font-family:'Jost'; font-size:11px; letter-spacing:.2em; color:var(--sage);
+    margin-bottom:18px;
+  }
+
+  h1.names{
+    font-family:'Cormorant Garamond'; font-weight:500;
+    font-size:clamp(34px, 8vw, 52px);
+    color:var(--rose-deep);
+    line-height:1.15;
+  }
+  h1.names em{
+    font-style:italic; color:var(--gold);
+  }
+
+  .lead{
+    font-family:'Cormorant Garamond'; font-size:clamp(19px, 4.4vw, 24px);
+    line-height:1.65; color:var(--plum); margin:26px auto 0; max-width:34ch;
+  }
+
+  .greeting-open{
+    font-family:'Jost'; font-size:14px; letter-spacing:.06em; color:var(--rose);
+    margin-bottom:10px;
+  }
+
+  .signature{
+    margin-top:38px; font-family:'Jost'; font-size:12px; letter-spacing:.14em;
+    color:var(--sage);
+  }
+  .signature .sig-names{
+    display:block; margin-top:10px; font-family:'Cormorant Garamond'; font-style:italic;
+    font-size:22px; color:var(--rose-deep); letter-spacing:0;
+  }
+
+  .divider{margin:56px auto; width:min(70%, 220px);}
+
+  /* Program card */
+  .program-card{
+    background:var(--blush-soft);
+    border:1px solid var(--blush);
+    border-radius:2px;
+    padding:44px 30px;
+    position:relative;
+  }
+  .program-card::before, .program-card::after{
+    content:''; position:absolute; width:22px; height:22px;
+    border:1px solid var(--gold);
+  }
+  .program-card::before{top:10px; left:10px; border-right:none; border-bottom:none;}
+  .program-card::after{bottom:10px; right:10px; border-left:none; border-top:none;}
+
+  .program-title{
+    font-family:'Cormorant Garamond'; font-style:italic; font-weight:500;
+    font-size:clamp(26px, 6vw, 34px);
+    color:var(--rose-deep);
+  }
+
+  .program-date{
+    margin-top:16px; font-family:'Jost'; font-size:13px; letter-spacing:.14em;
+    color:var(--plum);
+  }
+  .program-date b{color:var(--rose); font-weight:500;}
+
+  .program-time{
+    margin-top:22px; font-family:'Cormorant Garamond'; font-size:44px; color:var(--gold);
+    line-height:1;
+  }
+  .program-time span{font-size:15px; font-family:'Jost'; color:var(--sage); letter-spacing:.1em; display:block; margin-top:8px;}
+
+  .program-venue{
+    margin-top:26px; font-family:'Jost'; font-size:14px; line-height:1.8; color:var(--plum);
+  }
+  .program-venue b{display:block; font-family:'Cormorant Garamond'; font-style:italic; font-size:20px; color:var(--rose-deep); margin-bottom:4px; font-weight:500;}
+
+  /* Countdown */
+  .countdown{
+    display:flex; justify-content:center; gap:clamp(10px,3.5vw,26px);
+    margin-top:34px; flex-wrap:wrap;
+  }
+  .cd-unit{display:flex; flex-direction:column; align-items:center; min-width:56px;}
+  .cd-num{
+    font-family:'Cormorant Garamond'; font-weight:600; font-size:clamp(30px,7vw,42px);
+    color:var(--rose-deep);
+  }
+  .cd-label{
+    margin-top:6px; font-size:10px; letter-spacing:.14em; color:var(--sage);
+  }
+
+  /* Map button */
+  .map-btn{
+    display:inline-block; margin-top:32px; padding:13px 34px;
+    border:1px solid var(--rose); color:var(--rose-deep); text-decoration:none;
+    font-family:'Jost'; font-size:12px; letter-spacing:.16em;
+    transition:background .35s ease, color .35s ease;
+  }
+  .map-btn:hover{background:var(--rose); color:var(--ivory);}
+
+  /* Closing */
+  .closing-line{
+    font-family:'Cormorant Garamond'; font-style:italic; font-size:clamp(19px,4.6vw,23px);
+    color:var(--plum); line-height:1.7; max-width:32ch; margin:0 auto;
+  }
+  .closing-names{
+    margin-top:30px; font-family:'Cormorant Garamond'; font-weight:500; font-size:clamp(30px,7vw,40px);
+    color:var(--rose-deep);
+  }
+  .closing-date{
+    margin-top:10px; font-family:'Jost'; font-size:12px; letter-spacing:.2em; color:var(--gold);
+  }
+
+  footer{
+    text-align:center; padding:6vh 6vw 8vh; font-family:'Jost'; font-size:10px;
+    letter-spacing:.1em; color:var(--sage); opacity:.7;
+  }
+
+  /* sound toggle */
+  #sound-toggle{
+    position:fixed; bottom:22px; right:22px; z-index:40;
+    width:42px; height:42px; border-radius:50%;
+    background:var(--ivory); border:1px solid var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; opacity:0; transition:opacity .6s ease;
+    box-shadow:0 2px 10px rgba(140,58,84,.12);
+  }
+  #sound-toggle.visible{opacity:1;}
+  #sound-toggle svg{width:18px; height:18px;}
+
+  /* ---------- Language blocks ---------- */
+  [data-lang]{display:none;}
+  [data-lang].lang-active{display:inline;}
+  span[data-lang].lang-active{display:inline;}
+  div[data-lang].lang-active{display:block;}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div id="cover">
+  <div class="cover-lang">
+    <span class="active" data-lang-btn="uz">UZ</span><span data-lang-btn="ru">RU</span>
+  </div>
+  <div class="cover-ring">
+    <svg class="ornament" width="120" height="34" viewBox="0 0 120 34" style="position:absolute; top:14%;">
+      <path d="M6 20 C 20 6, 34 6, 40 18 C 46 6, 60 6, 60 18 C 60 6, 74 6, 80 18 C 86 6, 100 6, 114 20" stroke="#C6963C" stroke-width="1"/>
+      <circle cx="40" cy="17" r="1.6" fill="#C6963C"/>
+      <circle cx="80" cy="17" r="1.6" fill="#C6963C"/>
+    </svg>
+    <div class="cover-monogram">F<span class="cover-amp">&amp;</span>O</div>
+    <div class="cover-names">FERUZBEK &nbsp;·&nbsp; ODINAXON</div>
+    <div class="cover-date">
+      <span data-lang="uz" class="lang-active">27 sentabr 2026</span><span data-lang="ru">27 сентября 2026</span>
+    </div>
+  </div>
+  <button id="open-btn" class="cover-tap" aria-label="Taklifnomani ochish">
+    <span class="cover-tap-circle">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6963C" stroke-width="1.4"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </span>
+    <span data-lang="uz" class="lang-active">OCHISH UCHUN BOSING</span><span data-lang="ru">НАЖМИТЕ, ЧТОБЫ ОТКРЫТЬ</span>
+  </button>
+</div>
+
+<!-- ============ MAIN CONTENT ============ -->
+<div id="book">
+
+  <div id="sound-toggle" aria-label="Musiqani yoqish/o'chirish">
+    <svg id="sound-icon" viewBox="0 0 24 24" fill="none" stroke="#B25470" stroke-width="1.5">
+      <path d="M4 9v6h4l5 5V4L8 9H4z"/>
+      <path d="M16 8a5 5 0 0 1 0 8" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Greeting -->
+  <section class="section" id="greeting">
+    <svg class="ornament" width="180" height="46" viewBox="0 0 180 46">
+      <path d="M10 30 C 40 6, 60 6, 90 24 C 120 6, 140 6, 170 30" stroke="#C6963C" stroke-width="1"/>
+      <path d="M90 24 v14" stroke="#7C8B5D" stroke-width="1"/>
+      <path d="M90 30 c-6 -4 -6 -10 0 -14 c6 4 6 10 0 14 z" stroke="#7C8B5D" stroke-width="1"/>
+    </svg>
+    <div class="greeting-open" style="margin-top:26px;">
+      <span data-lang="uz" class="lang-active">Hurmatli mehmon,</span><span data-lang="ru">Дорогой гость,</span>
+    </div>
+    <h1 class="names">Feruzbek <em>&amp;</em> Odinaxon</h1>
+    <p class="lead">
+      <span data-lang="uz" class="lang-active">Ikki qalbning bir umrga birlashuvi shohidi bo'lishingizni astoydil istaymiz</span><span data-lang="ru">От всей души хотим, чтобы вы стали свидетелем союза двух сердец на всю жизнь</span>
+    </p>
+    <div class="signature">
+      <span data-lang="uz" class="lang-active">MEHR BILAN</span><span data-lang="ru">С ЛЮБОВЬЮ</span>
+      <span class="sig-names">Feruzbek &amp; Odinaxon</span>
+    </div>
+  </section>
+
+  <!-- Program -->
+  <section class="section" id="program">
+    <div class="eyebrow">
+      <span data-lang="uz" class="lang-active">To'y dasturi</span><span data-lang="ru">Программа торжества</span>
+    </div>
+    <div class="program-card">
+      <div class="program-title">
+        <span data-lang="uz" class="lang-active">Qizlar bazmi</span><span data-lang="ru">Девичник</span>
+      </div>
+      <div class="program-date">
+        <span data-lang="uz" class="lang-active">27 SENTABR &nbsp;·&nbsp; <b>YAKSHANBA</b></span><span data-lang="ru">27 СЕНТЯБРЯ &nbsp;·&nbsp; <b>ВОСКРЕСЕНЬЕ</b></span>
+      </div>
+      <div class="program-time">9:30<span>
+        <span data-lang="uz" class="lang-active">BOSHLANISH VAQTI</span><span data-lang="ru">ВРЕМЯ НАЧАЛА</span>
+      </span></div>
+      <div class="program-venue">
+        <b>TURON to'yxonasi</b>
+        <span data-lang="uz" class="lang-active">Yakkabog' tumani, Turon qishlog'i</span><span data-lang="ru">Яккабагский район, село Турон</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countdown -->
+  <section class="section" id="countdown-section">
+    <div class="eyebrow">
+      <span data-lang="uz" class="lang-active">Bayramgacha qoldi</span><span data-lang="ru">Осталось до праздника</span>
+    </div>
+    <div class="countdown">
+      <div class="cd-unit"><div class="cd-num" id="cd-days">00</div><div class="cd-label"><span data-lang="uz" class="lang-active">KUN</span><span data-lang="ru">ДНЕЙ</span></div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hours">00</div><div class="cd-label"><span data-lang="uz" class="lang-active">SOAT</span><span data-lang="ru">ЧАСОВ</span></div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-mins">00</div><div class="cd-label"><span data-lang="uz" class="lang-active">DAQIQA</span><span data-lang="ru">МИНУТ</span></div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-secs">00</div><div class="cd-label"><span data-lang="uz" class="lang-active">SONIYA</span><span data-lang="ru">СЕКУНД</span></div></div>
+    </div>
+    <a class="map-btn" id="map-link" href="#" target="_blank" rel="noopener">
+      <span data-lang="uz" class="lang-active">XARITADA KO'RISH</span><span data-lang="ru">ОТКРЫТЬ НА КАРТЕ</span>
+    </a>
+  </section>
+
+  <!-- Closing -->
+  <section class="section" id="closing">
+    <svg class="ornament" width="60" height="60" viewBox="0 0 60 60" style="margin-bottom:8px;">
+      <circle cx="30" cy="30" r="18" stroke="#C6963C" stroke-width="1"/>
+      <circle cx="30" cy="30" r="3" fill="#C6963C" stroke="none"/>
+    </svg>
+    <p class="closing-line">
+      <span data-lang="uz" class="lang-active">Biz uchun eng katta sovg'a — baxtli kunimizda yonimizda bo'lishingizdir</span><span data-lang="ru">Самый ценный подарок для нас — быть рядом с нами в этот счастливый день</span>
+    </p>
+    <div class="closing-names">Feruzbek &amp; Odinaxon</div>
+    <div class="closing-date">27 · 09 · 2026</div>
+  </section>
+
+  <footer>
+    <span data-lang="uz" class="lang-active">TURON TO'YXONASI &nbsp;·&nbsp; YAKKABOG'</span><span data-lang="ru">TURON TO'YXONASI &nbsp;·&nbsp; ЯККАБАГ</span>
+  </footer>
+
+  <!-- Background music: replace the file at assets/music.mp3 with your own track -->
+  <audio id="bgm" loop preload="none">
+    <source src="assets/music.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+  // Language toggle
+  const langButtons = document.querySelectorAll('[data-lang-btn]');
+  function switchLang(lang){
+    langButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.langBtn === lang);
+    });
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('lang-active', el.dataset.lang === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', () => switchLang(btn.dataset.langBtn));
+  });
+
+  // Open the invitation
+  const cover = document.getElementById('cover');
+  const book = document.getElementById('book');
+  const openBtn = document.getElementById('open-btn');
+  const bgm = document.getElementById('bgm');
+  const soundToggle = document.getElementById('sound-toggle');
+  let playing = false;
+
+  openBtn.addEventListener('click', () => {
+    cover.classList.add('hidden');
+    book.classList.add('visible');
+    soundToggle.classList.add('visible');
+    bgm.play().then(() => { playing = true; updateSoundIcon(); }).catch(() => {});
+  });
+
+  function updateSoundIcon(){
+    const icon = document.getElementById('sound-icon');
+    icon.innerHTML = playing
+      ? '<path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 8a5 5 0 0 1 0 8" stroke-linecap="round"/>'
+      : '<path d="M4 9v6h4l5 5V4L8 9H4z"/><line x1="16" y1="9" x2="21" y2="15" stroke-linecap="round"/><line x1="21" y1="9" x2="16" y2="15" stroke-linecap="round"/>';
+  }
+
+  soundToggle.addEventListener('click', () => {
+    if (playing) { bgm.pause(); } else { bgm.play().catch(()=>{}); }
+    playing = !playing;
+    updateSoundIcon();
+  });
+
+  // Countdown to 27 Sept 2026, 09:30 (Tashkent, UTC+5)
+  const target = new Date('2026-09-27T09:30:00+05:00').getTime();
+  function tick(){
+    const now = Date.now();
+    let diff = target - now;
+    if (diff < 0) diff = 0;
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Map link — precise venue coordinates
+  document.getElementById('map-link').href =
+    'https://www.google.com/maps/search/?api=1&query=38.930775,66.999157';
+</script>
+
+</body>
+</html>
